@@ -42,7 +42,20 @@ app.use("/api/admin", adminRoute);
 
 app.use(errorMiddleware);
 
-const PORT = 5001;
+// 2:step heroku
+const PORT = process.env.PORT || 5001;
+
+// 3:step heroku 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  // app.get('*', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  // });
+}
+
+
+
+
 connectDb().then(() => {
   app.listen(PORT, () => {
     console.log(`server is running at port: ${PORT}`);
